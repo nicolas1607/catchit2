@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Album;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Album|null find($id, $lockMode = null, $lockVersion = null)
@@ -94,12 +95,12 @@ class AlbumRepository extends ServiceEntityRepository
     // /**
     //  * @return Album[] Retourne l'album utilisateur selon un nom d'album
     //  */
-    public function findUserAlbumByName(String $name): array
+    public function findUserAlbumByName(User $user, String $name): array
     {
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT a FROM App:album a
-                WHERE a.user IS NOT NULL
+                WHERE a.user = " . $user->getId() . "
                 AND a.name = '" . $name . "'"
             )
             ->getResult();

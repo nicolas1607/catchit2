@@ -76,7 +76,7 @@ class AlbumController extends AbstractController
     public function addExist(Request $request, Album $id): Response
     {
         $user = $this->getUser();
-        $albumOrigin = $this->albumRepo->findUserAlbumByName($id->getName());
+        $albumOrigin = $this->albumRepo->findUserAlbumByName($user, $id->getName());
 
         if ($albumOrigin) {
             $this->addFlash('danger', 'Vous posséder déjà cette collection');
