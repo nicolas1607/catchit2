@@ -4,26 +4,28 @@ namespace App\Form;
 
 use App\Entity\Rating;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class RatingType extends AbstractType
+class RatingFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('message', TextareaType::class, [
-                'label' => 'Message',
+            ->add('rate', IntegerType::class, [
+                'label' => 'Note',
                 'attr' => [
-                    'class' => 'form-control'
+                    'min' => 0,
+                    'max' => 5,
+                    // 'value' => 3
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Ok',
                 'attr' => [
-                    'class' => 'btn btn-lg btn-primary'
+                    'class' => 'btn btn-primary'
                 ]
             ]);
     }

@@ -121,7 +121,7 @@ class ItemController extends AbstractController
         }
 
         // formulaire d'ajout rating
-        $addRatingForm = $this->createForm(RatingType::class);
+        $addRatingForm = $this->createForm(RatingFormType::class);
         $addRatingForm->handleRequest($request);
         if ($addRatingForm->isSubmitted() && $addRatingForm->isValid()) {
             $this->em->flush();
@@ -129,7 +129,7 @@ class ItemController extends AbstractController
         }
 
         // formulaire de modification rating
-        $addRatingForm = $this->createForm(RatingType::class);
+        $addRatingForm = $this->createForm(RatingFormType::class);
         $addRatingForm->handleRequest($request);
         if ($addRatingForm->isSubmitted() && $addRatingForm->isValid()) {
             $this->em->flush();
@@ -178,21 +178,17 @@ class ItemController extends AbstractController
     /**
      * @Route("/item/delete/{id}", name="delete_item")
      */
-    public function delete(Item $item): Response
+    public function delete(Request $request, Item $id): Response
     {
-        if (!$item->getAlbum()->getUser()) {
-            $items = $this->itemRepo->findBy(['name' => $item->getName()]);
+        if (!$id->getAlbum()->getUser()) {
+            $items = $this->itemRepo->findBy(['name' => $id->getName()]);
             foreach ($items as $item) {
                 $this->em->remove($item);
             }
         }
-        $this->em->remove($item);
+        $this->em->remove($id);
         $this->em->flush();
 
-        if ($item->getAlbum()->getUser()) {
-            return $this->redirectToRoute('show_album', ['id' => $item->getAlbum()->getId()]);
-        } else {
-            return $this->redirectToRoute('admin_item');
-        }
+        return $this->redirect($request->headers->get('referer'));
     }
 }

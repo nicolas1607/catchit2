@@ -73,14 +73,14 @@ class AlbumController extends AbstractController
     /**
      * @Route("/album/add/{id}", name="add_album_exist")
      */
-    public function addExist(Album $id): Response
+    public function addExist(Request $request, Album $id): Response
     {
         $user = $this->getUser();
         $albumOrigin = $this->albumRepo->findUserAlbumByName($id->getName());
 
         if ($albumOrigin) {
             $this->addFlash('danger', 'Vous posséder déjà cette collection');
-            return $this->redirectToRoute('browse');
+            return $this->redirect($request->headers->get('referer'));
         } else {
             $album = new Album;
             $album->setName($id->getName())
@@ -97,7 +97,7 @@ class AlbumController extends AbstractController
             $this->em->flush();
 
             $this->addFlash('success', $id->getName() . ' ajouté avec succès à vos collections !');
-            return $this->redirectToRoute('browse');
+            return $this->redirectToRoute('show_album', ['id' => $origin->getId()]);
         }
     }
 

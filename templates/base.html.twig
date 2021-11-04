@@ -5,12 +5,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}Catch'it{% endblock %}</title>
     {% block stylesheets %}
-    {# {{ encore_entry_link_tags('app') }} #}       {# Unknown "encore_entry_link_tags" function ... #}
+    {{ encore_entry_link_tags('app') }}
     <link rel="stylesheet" href="/build/app.css">
     {% endblock %}
 
     {% block javascripts %}
-    {# {{ encore_entry_script_tags('app') }} #}     {# Unknown "encore_entry_link_tags" function ... #}
+    {{ encore_entry_script_tags('app') }}
     <script src="/build/runtime.js"></script>
     <script src="/build/app.js"></script>
     {% endblock %}
@@ -20,15 +20,15 @@
     {% include "partials/_navbar.html.twig" %}
 
     {% for message in app.flashes('success') %}
-        <div class="alert alert-success">
-            {{ message }}
-        </div>
+    <div class="alert alert-success">
+        {{ message }}
+    </div>
     {% endfor %}
 
     {% for message in app.flashes('danger') %}
-        <div class="alert alert-danger">
-            {{ message }}
-        </div>
+    <div class="alert alert-danger">
+        {{ message }}
+    </div>
     {% endfor %}
 
     {% block body %}{% endblock %}

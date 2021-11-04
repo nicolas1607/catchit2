@@ -8,6 +8,7 @@ use App\Entity\Address;
 use App\Entity\Comment;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Collection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -239,9 +240,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Album[]
+     * @return PersistentCollection|Album[]
      */
-    public function getAlbums(): Collection
+    public function getAlbums(): PersistentCollection
     {
         return $this->albums;
     }
@@ -299,9 +300,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return PersistentCollection|Comment[]
      */
-    public function getComments(): Collection
+    public function getComments(): PersistentCollection
     {
         return $this->comments;
     }
