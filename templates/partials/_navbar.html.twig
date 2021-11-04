@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container nav">
+        <a class="navbar-brand" href="{{ url('home') }}">Catch'it</a>
+
+        <div class="collapse navbar-collapse" id="navbarColor03">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('browse') }}">Parcourir</a>
+                </li>
+                {% if app.user and not is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url('album') }}">Mes collections</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="profile">
+        </div>
+        {% if (app.user) %}
+        <div class="logout">
+            {% if is_granted('ROLE_ADMIN') %}
+            <a class="nav-link" href="{{ url('admin_user') }}">Admin</a>
+            {% elseif app.user %}
+            <a class="nav-link" href="{{ url('profile') }}">Mon profil</a>
+            {% endif %}
+            <a class="nav-link" href="{{ url('app_logout') }}">Logout</a>
+        </div>
+        {% else %}
+        <div class="login">
+            <a class="nav-link" href="{{ url('app_login') }}">Login</a>
+            <a class="nav-link" href="{{ url('app_register') }}">Register</a>
+        </div>
+        {% endif %}
+    </div>
+</nav>

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ album.name }}{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <div class="header-title">
+            <h1 class="title-h1">{{ album.name }}</h1>
+            <h3>{{ album.createdAt|date("m/d/Y") }}</h3>
+        </div>
+        <div class="header-content">
+            <p class="header-desc">{{ album.description }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="header-btn">
+                <a href="{{ path('edit_album', {'id': album.id}) }}" class="btn btn-primary">Modifier la collection</a>
+                <a href="{{ path('add_item', {'album_id': album.id}) }}" class="btn btn-primary">Ajouter un item</a>
+            </div>
+            {% elseif app.user %}
+            <div class="header-btn">
+                {% if album.user %}
+                <a href="{{ path('show_album', {'id': origin.id}) }}" class="btn btn-primary">Ajouter un item</a>
+                {% else %}
+                <a href="{{ path('add_album_exist', {'id': album.id}) }}" class="btn btn-primary">Ajouter à mes collections</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if album.items %}
+        <div class="list">
+            {% for item in album.items %}
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <a href="{{ path('show_item', {'id': item.id}) }}"><h4 class="card-title">{{ item.name }}</h4></a>
+                        {% if app.user and not is_granted('ROLE_ADMIN') and album.user == null %}
+                        <a href="{{ path('add_item_exist', {'item_id': item.id, 'album_id': album.id}) }}" class="card-add"><i class="fas fa-plus"></i></a>
+                        {% elseif (app.user and album.user == null) or is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('edit_item', {'id': item.id}) }}" class="card-edit"><i class="fas fa-edit"></i></a> 
+                        {% endif %}
+                        {% if ((app.user and album.user == null) and is_granted('ROLE_ADMIN')) or (app.user and album.user) %}
+                        <a href="{{ path('delete_item', {'id': item.id}) }}" class="card-delete"><i class="fas fa-trash"></i></a> 
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ item.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    
+</div>
+{% endblock %}

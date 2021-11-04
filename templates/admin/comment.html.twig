@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <h1 class="title-center-h1">Administration</h1>
+        <div class="header-btn">
+            <a href="{{ url('add_album') }}" class="btn btn-primary">Ajouter une collection</a>
+        </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_user') }}">Les utilisateurs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_collection') }}">Les collections</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_item') }}">Les items</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="{{ url('admin_comment') }}">Les avis</a>
+        </li>
+    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Collection</th>
+                <th>Item</th>
+                <th>Message</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        {% if comments %}
+            <tbody>
+            {% for rate in comments %}
+                <tr>
+                    <td>{{ rate.user.firstname }} {{ rate.user.lastname }}</td>
+                    <td>{{ rate.item.album.name }}</td>
+                    <td>{{ rate.item.name }}</td>
+                    <td>{{ rate.message }}</td>
+                    <td class="table-action">
+                        <a href="{{ path('valid_comment', {'id': rate.id}) }}" title="Valider un commentaire">
+                            <i class="fas fa-check"></i>
+                        </a>
+                        <a href="{{ path('delete_comment', {'id': rate.id}) }}" title="Refuser un commentaire">
+                            <i class="fas fa-times"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        {% else %}
+        </table>
+        <h4 class="admin-no-result">Aucun résultat</h4>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

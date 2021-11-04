@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon profil{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <h1 class="title-h1 title-center">Mes informations personnelles</h1>
+    <div class="form">
+        {{ form_start(modify_profile_form) }}
+            <div class="form-group">
+                {{ form_row(modify_profile_form.lastname) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(modify_profile_form.firstname) }}
+            </div>
+            <div class="form-group">
+                {{ form_row(modify_profile_form.contact) }}
+            </div>
+            <div class="form-submit">
+                {{ form_row(modify_profile_form.submit) }}
+            </div>
+        {{ form_end(modify_profile_form) }}
+    </div>
+</div>
+{% endblock %}

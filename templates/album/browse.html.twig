@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Parcourir{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <div class="header-title">
+            <h1 class="title-h1">Parcourir les collections</h1>
+        </div>
+        <div class="header-content">
+            <p>Renseignez vous sur les dernières nouveautés : </br> Parcourez le monde à la recherche de ses trésors.</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="header-btn">
+                <a href="{{ url('add_album') }}" class="btn btn-primary">Ajouter une collection</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if albums %}
+        <div class="list">
+            {% for album in albums %}
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <a href="{{ path('show_album', {'id': album.id}) }}"><h4 class="card-title">{{ album.name }}</h4></a>
+                        {% if app.user and not is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('add_album_exist', {'id': album.id}) }}" class="card-add"><i class="fas fa-plus"></i></a>
+                        {% elseif app.user %}
+                        <a href="{{ path('edit_album', {'id': album.id}) }}" class="card-edit"><i class="fas fa-edit"></i></a>
+                        <a href="{{ path('delete_album', {'id': album.id}) }}" class="card-delete"><i class="fas fa-trash"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ album.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

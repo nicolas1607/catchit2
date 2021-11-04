@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <div class="header-title">
+            <h1 class="title-h1">{{ item.name }}</h1>
+            {% if rating == 0 %}
+            <p>Note globale : 0/5</p>
+            {% elseif rating %}
+            <p>Note globale : {{ rating }}/5</p>
+            {% else %}
+            <p>Aucune note</p> 
+            {% endif %}         
+        </div>
+        <div class="header-content">
+            <p class="header-desc">{{ item.description }}</p>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="header-btn">
+                <a href="{{ path('edit_item', {'id': item.id}) }}" class="btn btn-primary">Modifier l'item</a>
+            </div>
+            {% elseif app.user %}
+            <div class="header-btn">
+                {% if rateUser == null %}
+                <a href="{{ path('add_rating', {'id': item.id}) }}" class="btn btn-primary">Ajouter un avis</a>
+                {% else %}
+                <a href="{{ path('edit_rating', {'rating_id': rate.id}) }}" class="btn btn-primary">Modifier mon avis</a>
+                {% endif %}
+                <a href="{{ path('add_comment', {'item_id': item.id}) }}" class="btn btn-primary">Ajouter un commentaire</a>
+                {% if item.album.user == null %}
+                <a href="{{ path('add_item_exist', {'item_id': item.id, 'album_id' : item.album.id}) }}" class="btn btn-primary">Ajouter à ma collection</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div>
+        {% if count <= 1 %}
+        <h4 class="title-h2">Total de {{ count }} commentaire</h4>
+        {% else %}
+        <h4 class="title-h2">Total de {{ count }} commentaires</h4>
+        {% endif %}
+        {% if comment %}
+            <div class="list">
+                {% for rate in comment %}
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{{ rate.user.firstname }} {{ rate.user.lastname }}</strong>
+                            <div class="card-comment-action">
+                                <strong>{{ rate.createdAt|date("m/d/Y") }}</strong>
+                                <a href="{{ path('delete_comment', {'id': rate.id}) }}" class="card-comment-delete"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p>{{ rate.message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

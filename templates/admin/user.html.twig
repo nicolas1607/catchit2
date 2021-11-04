@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Administration{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <h1 class="title-center-h1">Administration</h1>
+        <div class="header-btn">
+            <a href="{{ url('add_album') }}" class="btn btn-primary">Ajouter une collection</a>
+        </div>
+    </div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab" href="{{ url('admin_user') }}">Les utilisateurs</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_collection') }}">Les collections</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_item') }}">Les items</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab" href="{{ url('admin_comment') }}">Les avis</a>
+        </li>
+    </ul>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Roles</th>
+            </tr>
+        </thead>
+        {% if users %}
+            <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.lastname }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.contact }}</td>
+                    <td>
+                        <ul class="user-roles">
+                            {% for role in user.roles %}
+                            <li>{{ role }}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        {% else %}
+        </table>
+        <h4 class="admin-no-result">Aucun résultat</h4>
+        {% endif %}
+    </table>
+</div>
+{% endblock %}

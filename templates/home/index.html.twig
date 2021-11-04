@@ -1,0 +1,81 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catch'it{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <h1 class="title-h1 title-center">Bienvenue sur Catch'it !</h1>
+    </div>
+
+    {% if lastAlbums %}
+        <div class="home-albums">
+            <h2 class="title-h2">Les derniers ajouts</h2>
+            <div class="list">
+                {% for album in lastAlbums %}
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <a href="{{ path('show_album', {'id': album.id}) }}"><h4 class="card-title">{{ album.name }}</h4></a>
+                            <p class="card-date">{{ album.createdAt|date("m/d/Y") }}</p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ album.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if mostAlbums %}
+        <div class="home-albums">
+            <h2 class="title-h2 title-right">Les collections les plus utilisées</h2>
+            <div class="list">
+                {% for album in mostAlbums %}
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <a href="{{ path('show_album', {'id': album.id}) }}"><h4 class="card-title">{{ album.name }}</h4></a>
+                            <p class="card-added">{{ album.added }} 
+                                {% if album.added <= 1 %}
+                                ajout
+                                {% else %}
+                                ajouts
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ album.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if mostItems %}
+        <div class="home-albums">
+            <h2 class="title-h2">Les items les plus collectionnés</h2>
+            <div class="list">
+                {% for item in mostItems %}
+                    <div class="card bg-light">
+                        <div class="card-header">
+                            <a href="{{ path('show_item', {'id': item.id}) }}"><h4 class="card-title">{{ item.name }}</h4></a>
+                            <p class="card-added">{{ item.added }} 
+                                {% if item.added <= 1 %}
+                                ajout
+                                {% else %}
+                                ajouts
+                                {% endif %}
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">{{ item.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

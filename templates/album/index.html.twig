@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes collections{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <div class="header">
+        <div class="header-title">
+            <h1 class="title-h1">Mes collections</h1>
+        </div>
+        <div class="header-content">
+            <p>Faites savoir votre passion, créer vos collections ! </br>
+            Partagez vos envies et chercher la perle rare.</p>
+            <div class="header-btn">
+                <div class="header-list-btn">
+                    <a href="{{ url('browse') }}" class="btn btn-primary">Ajouter une collection</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if user.albums %}
+        <div class="list">
+            {% for album in user.albums %}
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <a href="{{ path('show_album', {'id': album.id}) }}"><h4 class="card-title">{{ album.name }}</h4></a>
+                        <a href="{{ path('delete_album', {'id': album.id}) }}" class="card-delete"><i class="fas fa-trash"></i></a>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ album.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

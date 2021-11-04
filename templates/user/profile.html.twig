@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catch'it{% endblock %}
+
+{% block body %}
+<div class="cont">
+    <h1 class="title-center-h1">Bonjour {{ user.firstname }} !</h1>
+    <p>Vous êtes ici sur votre profil. Vous pouvez dès à présent renseigner vos informations personnelles.</p>
+
+    <div class="info">
+        <div class="email info-content">
+            <h3 class="title-h3">Vos informations</h3>
+            <p class="content">{{ user.firstname }} {{ user.lastname }}</p>
+            {% if user.contact %}
+            <p class="content">Téléphone : {{ user.contact }}</p>
+            {% endif %}
+            <p class="content">Email : {{ user.email }}</p>
+            <div class="buttons">
+                <a class="link-underline" href="{{ path('modify_info') }}">Modifier</a>
+            </div>
+        </div>
+        <div class="address info-content">
+            <h3 class="title-h3">Votre adresse</h3>
+            {% if user.address %}
+            <p class="content">{{ user.address.street }}, </br> {{ user.address.postalCode }} {{ user.address.city }} </br> {{ user.address.country }}</p>
+            <div class="buttons">
+                <a class="link-underline" href="{{ path('modify_address', {'id': user.address.id}) }}">Modifier</a>
+                <a class="link-underline" href="{{ path('delete_address', {'id': user.address.id}) }}">Supprimer</a>
+            </div>
+            {% else %}
+            <a class="link-underline" href="{{ url('add_address') }}">Renseignez vos informations</a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="comments">
+        {% if user.comments %}
+            <h4 class="title-h3">Vos commentaires</h4>
+            <div class="list">
+                {% for rate in comments %}
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>{{ rate.user.firstname }} {{ rate.user.lastname }}</strong>
+                            <div class="card-comment-action">
+                                <strong>{{ rate.createdAt|date("m/d/Y") }}</strong>
+                                <a href="{{ path('delete_comment', {'id': rate.id}) }}" class="card-comment-delete"><i class="fas fa-trash"></i></a>
+                            </div>                        </div>
+                        <div class="card-body">
+                            <p class="card-title">
+                                {% if rate.isValid == false %}
+                                <strong class="text-danger">En attente de validation</strong>
+                                {% endif %}
+                                Collection : {{ rate.item.album.name }} </br>
+                                Item : {{ rate.item.name }}
+                            </p>
+                            <p>{{ rate.message }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h3 class="title-h3">Vous n'avez posté aucun commentaire</h3>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
