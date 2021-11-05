@@ -103,7 +103,7 @@ class AppFixtures extends Fixture
         $faker = Factory::create();
 
         $admin = new User;
-        $admin->setEmail('adrien.sandras@cube.com')
+        $admin->setEmail('user@gmail.com')
             ->setPassword('$2y$13$GYXDjaRD1PDQ8S2JhH0gWOI6UWsuhXVPFMPqEpUPXaeHyN60yQm6i')
             ->setRoles([""])
             ->setFirstname('Nicolas')
