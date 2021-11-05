@@ -104,7 +104,7 @@ class AppFixtures extends Fixture
 
         $admin = new User;
         $admin->setEmail('user@gmail.com')
-            ->setPassword('$2y$13$GYXDjaRD1PDQ8S2JhH0gWOI6UWsuhXVPFMPqEpUPXaeHyN60yQm6i')
+            ->setPassword('$2y$13$uTD5EiZsmTYDal69lhX.O.n.v6kBF6ZD0.VPtPvSnXTnL5Ym0iAPC')
             ->setRoles([""])
             ->setFirstname('Nicolas')
             ->setLastname('Mormiche');
