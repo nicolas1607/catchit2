@@ -2,9 +2,15 @@
             // Bienvenue sur Catch'it ! //
 
 
-L'application permet de gérer vos collections parmis celle proposées sur le site.
+L'application permet de gérer vos collections parmis celles proposées sur le site.
 En ajoutant les items que vous possedez déjà, vous augmentez leur popularité auprès
 des autres utilisateurs. Il vous est également possible de donner votre avis sur un item.
+
+/!\ IMPORTANT /!\
+La gestion des collections et des items a été traité de manière à ce que l'on duplique
+ceux proposés par l'admin. C'est à dire que si deux utilisateurs ajoutent l'item Faucon Milenium,
+il y aura en tout trois items du Faucon en BD, un pour chaque user + celui de l'admin.
+/!\ IMPORTANT /!\
 
 
 
@@ -25,7 +31,7 @@ Configurer le fichier .env comme l'exemple suivant :
 > symfony console doc:schema:update --force
 > symfony console doc:fix:load
     > yes
-> symfony console doc:data:import db.sql    <!-- Ne fonctione plus. Importer le fichier dans phpMyAdmin  -->
+> symfony console doc:data:import db.sql   <!-- Ne fonctione pas chez moi. Importer le fichier dans phpMyAdmin
 > symfony serve
 
 
