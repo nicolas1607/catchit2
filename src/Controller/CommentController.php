@@ -74,6 +74,5 @@ class CommentController extends AbstractController
         $this->em->flush();
 
         return $this->redirectToRoute('admin_comment');
-        // return $this->redirectToRoute('show_item', ['id' => $comment->getItem()->getId()]);
     }
 }

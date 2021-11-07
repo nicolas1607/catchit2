@@ -10,13 +10,13 @@
 
     {% if lastAlbums %}
         <div class="home-albums">
-            <h2 class="title-h2">Les derniers ajouts</h2>
+            <h2 class="title-h2">Les dernières collections ajoutées</h2>
             <div class="list">
                 {% for album in lastAlbums %}
                     <div class="card bg-light">
                         <div class="card-header">
                             <a href="{{ path('show_album', {'id': album.id}) }}"><h4 class="card-title">{{ album.name }}</h4></a>
-                            <p class="card-date">{{ album.createdAt|date("m/d/Y") }}</p>
+                            <p class="card-date">{{ album.createdAt|date("d/m/Y") }}</p>
                         </div>
                         <div class="card-body">
                             <p class="card-text">{{ album.description }}</p>

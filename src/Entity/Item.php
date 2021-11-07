@@ -47,7 +47,7 @@ class Item
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="item")
+     * @ORM\OneToMany(targetEntity=Rating::class, mappedBy="item", cascade={"remove"})
      */
     private $ratings;
 

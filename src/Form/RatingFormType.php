@@ -19,7 +19,6 @@ class RatingFormType extends AbstractType
                 'attr' => [
                     'min' => 0,
                     'max' => 5,
-                    // 'value' => 3
                 ]
             ])
             ->add('submit', SubmitType::class, [

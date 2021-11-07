@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Item;
 use App\Entity\User;
+use App\Entity\Rating;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
@@ -28,9 +29,9 @@ class ItemRepository extends ServiceEntityRepository
         return $this->getEntityManager()
             ->createQuery(
                 "SELECT i FROM App:item i
-                    INNER JOIN App:album a
-                    WITH i.album = a.id
-                    WHERE a.user IS NULL"
+                INNER JOIN App:album a
+                WITH i.album = a.id
+                WHERE a.user IS NULL"
             )
             ->getResult();
     }
@@ -55,7 +56,7 @@ class ItemRepository extends ServiceEntityRepository
     // /**
     //  * @return Item[] Retourne l'item un utilisateur selon un nom
     //  */
-    public function findUserByIdAndItemByName(Int $id, String $name): array
+    public function findUserByIdAndItemByName(?Int $id, String $name): array
     {
         return $this->getEntityManager()
             ->createQuery(

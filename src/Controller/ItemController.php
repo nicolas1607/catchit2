@@ -6,7 +6,6 @@ use App\Entity\Item;
 use App\Entity\Album;
 use App\Form\ItemType;
 use DateTimeImmutable;
-use App\Form\RatingType;
 use App\Form\RatingFormType;
 use App\Repository\ItemRepository;
 use App\Repository\AlbumRepository;
@@ -69,7 +68,7 @@ class ItemController extends AbstractController
     {
         $item_id->setAdded($item_id->getAdded() + 1);
         $userAlbum = $this->albumRepo->findUserAlbumByItem($item_id->getId());
-        // Si le user ne possède pas encore la collection, on lui crée
+        // On vérifie si le user possède ou non la collection
         if (count($userAlbum) == 0) {
             $user = $this->getUser();
             $userAlbum = new Album;
@@ -93,6 +92,9 @@ class ItemController extends AbstractController
             $item->setName($item_id->getName())
                 ->setDescription($item_id->getDescription())
                 ->setAlbum($userAlbum);
+            foreach ($item_id->getRatings() as $rating) {
+                $item->addRating($rating);
+            }
             $userAlbum->addItem($item);
 
             $this->em->persist($item);
